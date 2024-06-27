@@ -7,6 +7,8 @@ Steam API Key (https://steamcommunity.com/dev/registerkey)
 
 `python -m flask run`
 
+`# GET 127.0.0.1:5000/grab/?api_key=APIKEY&steam_id=STEAMID`
+
 If you want to alter or add to this script please feel free to do so
 
 # Reference 
