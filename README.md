@@ -5,6 +5,7 @@ Using python to send a request to the steam api and return data for the profile
 
 Steam API Key (https://steamcommunity.com/dev/registerkey)
 
+`python -m flask run`
 
 If you want to alter or add to this script please feel free to do so
 
