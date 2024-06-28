@@ -15,8 +15,9 @@
 
 # Import Libs
 import requests
+from markupsafe import escape # used for escaping HTML
 
-from flask import Flask, request
+from flask import Flask, request, render_template, url_for
 
 from discord_webhook import DiscordWebhook
 
@@ -52,16 +53,31 @@ def get_player_summaries(api_key, steam_id):
         return data
     else:
         print(f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}")
-        return None    
+        return f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}" 
 
-# GET 127.0.0.1:5000/grab/?api_key=APIKEY&steam_id=STEAMID
-@app.route('/grab/', methods=['GET'])
-def do_steam():
+
+@app.route('/')
+def do_index():
+    return render_template('index.html')
+
+@app.route("/find/", methods=['POST', 'GET'])
+def do_find():
+    #Moving forward code
+    steam_id = request.form.get('steam_id')
+    steam_data = get_player_summaries("20B3DE2899C8F5D96DDFEF109FC006B6", steam_id)
+    player_info = steam_data.get("response", {}).get("players", [{}])[0] 
+    print(request.form.get('steam_id'))
+    return render_template('index.html', steam_data=player_info);
+
+# GET 127.0.0.1:5000/grab/api_key/steam_id
+@app.route('/grab/<api_key>/<steam_id>', methods=['GET'])
+def do_steam(api_key, steam_id):
 
     # set the api key for steams api
-    api_key = request.args.get('api_key')
+   # api_key = request.args.get('api_key')
     # set the steam id to scrape data from
-    steam_id = request.args.get('steam_id')
+    #steam_id = request.args.get('steam_id')
+
 
     class steamStuff:
         steamData = get_player_summaries(api_key,steam_id)
