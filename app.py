@@ -11,11 +11,13 @@
 # Flask - https://flask.palletsprojects.com/en/3.0.x/
 # Steam API - https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0001.29
 # Requests LIB - https://requests.readthedocs.io/en/latest/
-
+# Discord Webhook Lib - https://pypi.org/project/discord-webhook/#basic-webhook
 # Import Libs
 import requests
 
 from flask import Flask, request
+
+from discord_webhook import DiscordWebhook
 
 app = Flask(__name__)
 
@@ -42,11 +44,16 @@ def get_player_summaries(api_key, steam_id):
 # GET 127.0.0.1:5000/grab/?api_key=APIKEY&steam_id=STEAMID
 @app.route('/grab/', methods=['GET'])
 def do_steam():
-    
+
     # set the api key for steams api
     api_key = request.args.get('api_key')
     # set the steam id to scrape data from
     steam_id = request.args.get('steam_id')
+    
+    # Set Webhook url and message to send
+    webhook = DiscordWebhook(url="https://discord.com/api/webhooks/1256163384974381110/pMr3eppqjchqHt6pIyBMwag9g_jhoAJUqwbYBXJGw2SbBJY4AEfv-phY8Y8lmSLafamq", content="We have a request for " + steam_id)
+    # Make the request we can also return the response for debugging
+    response = webhook.execute()
 
     # Make the request with the provided data
     data = get_player_summaries(api_key,steam_id)
