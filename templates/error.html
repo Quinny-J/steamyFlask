@@ -12,26 +12,19 @@
     </div>
     <br>
     <div class="box-header">
-      <h2>Please enter a STEAMID below and watch the magic happen</h2>
+      <h2>ERROR</h2>
     </div>
 
-    <form id="steamy-form" action="/find/" method="post" class="input-group">
-      <input id="steamy-input" name="steam_id" type="number" placeholder="Please enter a STEAMID.">
-      <button type="submit" id="send-button">
-        <i class="fas fa-search"></i> 
-      </button>
-    </form>
-    <br>
-
     <div class="displayTab">
-      <button class="displayTablinks" onclick="displayType(event, 'Raw')"><i class="fa-regular fa-file-code"></i> Raw</button>
-      <button class="displayTablinks" onclick="displayType(event, 'Formatted')"><i class="fa-solid fa-highlighter"></i> Formatted</button>
+      <button class="displayTablinks" onclick="displayType(event, 'Raw')" id="activeTab"><i class="fa-regular fa-file-code"></i> Error</button>
     </div>
 
     <div id="Raw" class="displayTabcontent">
     <div class="box-content">
       <div class="response-box">
-        <ul id="response-data">{{ steam_data }} </ul>
+        <ul id="response-data">[<font color="red">ERROR</font>] {{ error_data }} </ul>
+        <ul id="response-data">[<font color="cyan">SYSTM</font>] Please return the the previous page </ul>
+        <ul id="response-data">[<font color="cyan">SYSTM</font>] Click <a href="/">here</a> to return </ul>
       </div>
     </div>
     </div> 
@@ -40,33 +33,27 @@
       <div class="box-content">
         <div class="response-box">
           <ul id="response-data">Username : {{ steam_name }} </ul>
-          <ul id="response-data">Level : {{ steam_level }} </ul>
-          <ul id="response-data">Total XP : {{ steam_totxp }} </ul>
-          <ul id="response-data">XP to Rankup : {{ steam_xptor }} </ul>
           <ul id="response-data">Country : {{ steam_country }} </ul>
           <ul id="response-data">Avatar : {{ steam_avatar }} </ul>
-          <ul id="response-data">Time Created : {{ steam_timecreated }} </ul>
+          <ul id="response-data">Username : {{ steam_name }} </ul>
         </div>
       </div>
       </div> 
 
-      <div id="Test" class="input-group">
-        <label id="steamy-label"><i class="fa-regular fa-file-code"></i> Made by <a href="github.com/quinny-j">github.com/quinny-j</a>
-      </div>
-
   </div>
 </div>
 
-
-
 <script>
+
+document.getElementById("activeTab").click();  
+
   function displayType(evt, dispName) {
     var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("displayTabcontent");
+    tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
     }
-    tablinks = document.getElementsByClassName("displayTablinks");
+    tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }

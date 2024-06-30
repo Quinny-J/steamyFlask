@@ -55,6 +55,23 @@ def get_player_summaries(api_key, steam_id):
         print(f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}")
         return f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}" 
 
+def get_player_level(api_key, steam_id):
+    base_url = "http://api.steampowered.com/IPlayerService/GetBadges/v1/"
+    params = {
+        "key": api_key,
+        "steamid": steam_id
+    }
+
+    # Make a request with the params provided to the func
+    response = requests.get(base_url, params=params)
+    
+    # Check for 200.ok which means success if not something is wrong
+    if response.status_code == 200:
+        data = response.json()
+        return data
+    else:
+        print(f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}")
+        return f"{statusMsg.WARN} Failed to fetch data. Status code: {response.status_code}"
 
 @app.route('/')
 def do_index():
@@ -62,14 +79,48 @@ def do_index():
 
 @app.route("/find/", methods=['POST', 'GET'])
 def do_find():
-    #Moving forward code
-    steam_id = request.form.get('steam_id')
-    steam_data = get_player_summaries("20B3DE2899C8F5D96DDFEF109FC006B6", steam_id)
-    player_info = steam_data.get("response", {}).get("players", [{}])[0] 
-    print(request.form.get('steam_id'))
-    return render_template('index.html', steam_data=player_info);
 
+    # Basic error handling fixes a web error you get when throttling
+    try:
+        steam_id = request.form.get('steam_id')
+        steam_data = get_player_summaries("20B3DE2899C8F5D96DDFEF109FC006B6", steam_id)
+        steam_data_badges = get_player_level("20B3DE2899C8F5D96DDFEF109FC006B6", steam_id)
+        player_info = steam_data.get("response", {}).get("players", [{}])[0] 
+        level_info = steam_data_badges.get("response", {}) 
+        print("Requesting data for " + request.form.get('steam_id'))
+        print(level_info.get("player_level", ""))
+
+         # TBH i don't really need to put it all in a class 
+        class steamUser:
+            player_info = steam_data.get("response", {}).get("players", [{}])[0] 
+            steam_avatar = player_info.get("avatar", "")
+            steam_avatarMed = player_info.get("avatarmedium", "")
+            steam_profileurl = player_info.get("profileurl", "")
+            steam_personaname = player_info.get("personaname", "")
+            steam_realname = player_info.get("realname", "")
+            steam_country = player_info.get("loccountrycode", "")
+            steam_timecreated = player_info.get("timecreated", "")
+            steam_totxp = level_info.get("player_xp", "")
+            steam_xptor = level_info.get("player_xp_needed_to_level_up", "")
+            steam_level= level_info.get("player_level", "")
+
+        return render_template('index.html', 
+                               steam_data=player_info, 
+                               steam_name=steamUser.steam_personaname,
+                               steam_country=steamUser.steam_country,
+                               steam_timecreated=steamUser.steam_timecreated,
+                               steam_avatar=steamUser.steam_avatar,
+                               steam_totxp = steamUser.steam_totxp,
+                               steam_xptor = steamUser.steam_xptor,
+                               steam_level= steamUser.steam_level
+                               );
+    except:
+        print("An exception occurred")
+        return render_template('error.html', error_data="Check the supplied steamid");
+   
 # GET 127.0.0.1:5000/grab/api_key/steam_id
+# Ill keep this in for now but i want to impove it
+# Maybe make a api ?
 @app.route('/grab/<api_key>/<steam_id>', methods=['GET'])
 def do_steam(api_key, steam_id):
 
