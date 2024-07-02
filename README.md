@@ -12,7 +12,7 @@ Follow these steps
 
 ```bash
 # Goto Dir
-$ cd telnet.live
+$ cd steamyFlask
 
 # Install Requirements
 $ pip install requirements.txt
