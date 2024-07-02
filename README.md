@@ -3,6 +3,10 @@
 
 Using python to send a request to the steam api and return data for the profile via webpage
 
+If you want to alter or add to this script please feel free to do so
+
+![PICTURE](https://raw.githubusercontent.com/Quinny-J/steamyFlask/main/MAIN.png)
+
 # ⚡ Getting Started
 
 Install Python **[Link](https://www.python.org/downloads/)**
@@ -24,9 +28,6 @@ $ python -m flask run
 
 `127.0.0.1:5000`
 
-If you want to alter or add to this script please feel free to do so
-
-![PICTURE](https://raw.githubusercontent.com/Quinny-J/steamyFlask/main/MAIN.png)
 
 ## 📕 Reference 
 - Steam API - https://developer.valvesoftware.com/wiki/Steam_Web_API#GetPlayerSummaries_.28v0001.29 
