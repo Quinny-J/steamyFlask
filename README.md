@@ -3,11 +3,26 @@
 
 Using python to send a request to the steam api and return data for the profile
 
-Steam API Key (https://steamcommunity.com/dev/registerkey)
+# ⚡ Getting Started
 
-`python -m flask run`
+Install Python **[Link](https://www.python.org/downloads/)**
+Get Steam API KEY **[Link](https://steamcommunity.com/dev/registerkey)**
 
-`# GET 127.0.0.1:5000/grab/?api_key=APIKEY&steam_id=STEAMID`
+Follow these steps
+
+```bash
+# Goto Dir
+$ cd telnet.live
+
+# Install Requirements
+$ pip install requirements.txt
+
+# Run It !
+$ python -m flask run
+
+```
+
+`127.0.0.1:5000`
 
 If you want to alter or add to this script please feel free to do so
 
