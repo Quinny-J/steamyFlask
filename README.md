@@ -1,7 +1,7 @@
 # 🍺 steamyFlask
- Python script to grab steam profile info and display in browser
+ Python script to grab steam profile info and display in browser using flask
 
-Using python to send a request to the steam api and return data for the profile
+Using python to send a request to the steam api and return data for the profile via webpage
 
 # ⚡ Getting Started
 

@@ -93,7 +93,6 @@ a {
 .response-box {
   flex: 2; 
   min-width: 300px; 
-  height: 400px;
   overflow-y: auto;
   word-wrap: break-word;
   padding: 10px;
